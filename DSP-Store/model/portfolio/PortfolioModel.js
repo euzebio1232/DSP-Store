@@ -19,4 +19,8 @@ module.exports = class PortfolioModel{
     static deletar(id, callback){
         return db.query("DELETE FROM portfolio WHERE id_portfolio = ?", [id], callback)
     }
+
+    static editar(portfolio, callback){
+        return db.query("UPDATE portfolio SET descricao = ?, detalhes = ? WHERE id_portfolio = ?", [portfolio.descricao, portfolio.detalhes, portfolio.id_portfolio], callback)
+    }
 }

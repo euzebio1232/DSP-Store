@@ -83,6 +83,29 @@ router.delete("/:id", function(req, res, next){
         res.json(resposta);
 
     })
+});
+
+router.put("/", function(req, res, next){
+
+    dspModel.editar(req.body, function(erro, retorno){
+        let resposta = new RespostaClass();
+
+        if(erro){
+            resposta.erro = true;
+            resposta.msg = 'Ocorreu um erro!';
+            console.log('erro', erro);
+        }else{
+            if(retorno.affectedRows > 0){
+                resposta.msg = "Objeto editado com sucesso!"
+            }else{
+                resposta.erro = true;
+                resposta.msg = "Não foi possivel editar o objeto!"
+            }
+        }
+        console.log('resp', resposta)
+        res.json(resposta);
+
+    })
 })
 
 module.exports = router;
