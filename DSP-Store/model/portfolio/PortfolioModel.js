@@ -15,4 +15,8 @@ module.exports = class PortfolioModel{
     //Adiciona produtos
     static adicionar(portfolio, callback){
         return db.query("INSERT INTO portfolio (descricao, detalhes) VALUES(?, ?)", [portfolio.descricao, portfolio.detalhes], callback)};
+
+    static deletar(id, callback){
+        return db.query("DELETE FROM portfolio WHERE id_portfolio = ?", [id], callback)
+    }
 }
