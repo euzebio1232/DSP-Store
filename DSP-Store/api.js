@@ -5,7 +5,7 @@ const api = express();
 const port = 3000;
 const router = express.Router();
 
-const portfolioRouter = require('./router/portfolioRouter');
+const produtosRouter = require('./router/produtosRouter');
 
 api.use(cors());
 
@@ -13,11 +13,11 @@ api.use(bodyparser.urlencoded({extended: true}));
 api.use(bodyparser.json());
 
 router.get("/", (req, res) => res.json({
-    mensagem: 'API online!'
+    mensagem: 'API ONLINE!'
 }));
 
 api.use('/', router);
-api.use('/portfolio', portfolioRouter);
+api.use('/produtos', produtosRouter);
 
 api.listen(port);
-console.log('API INICIALIZADA...');
+console.log('API INICIALIZADA COM SUCESSO...');

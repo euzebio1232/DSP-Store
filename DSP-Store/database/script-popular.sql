@@ -1,4 +1,4 @@
-INSERT INTO portfolio(descricao, detalhes)
-VALUES('Desenvolvimento de Websites', 'Tecnologias JS, NodeJs, Express e MySQL');
-INSERT INTO portfolio(descricao, detalhes)
-VALUES('Desenvolvimento de Websites', 'Tecnologias JS, NodeJs, Express e MySQL');
+INSERT INTO produto(nome, descricao)
+VALUES('CAMISETA DSP SÃO JOÃO 2019', 'MATERIAL 100% ALGODÃO');
+INSERT INTO produto(nome, descricao)
+VALUES('BONÉ TRACK DSP 2019', 'LOGO DSP BORDADA, ABA CURVA E PARTE DE TRÁS EM TELA.');

@@ -1,5 +1,5 @@
-CREATE TABLE portfolio (
-    id_portfolio INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-    descricao VARCHAR(255) NULL    ,
-    detalhes TEXT NULL  ,
-PRIMARY KEY(id_portfolio));
+CREATE TABLE produto (
+    id_produto INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    nome VARCHAR(255) NULL    ,
+    descricao TEXT NULL  ,
+PRIMARY KEY(id_produto));
