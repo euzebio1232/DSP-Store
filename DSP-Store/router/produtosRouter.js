@@ -41,6 +41,25 @@ router.get("/:id?", function(req, res, next){
     })
 });
 
+//BUSCA/RETORNA OS PRODUTOS POR CATEGORIA
+router.get("/categoria?", function(req, res, next){
+
+    produtosModel.getCategoria(req.params.categoria, function(erro, retorno){
+        let resposta = new RespostaClass();
+
+        if(erro){
+            resposta.erro = true;
+            resposta.msg = 'Ocorreu um erro!';
+            console.log('erro', erro);
+        }else{
+            resposta.dados = retorno;
+        }
+
+        res.json(resposta);
+
+    })
+});
+
 //CADASTRA UM NOVO PRODUTO
 router.post("/?", function(req, res, next){
 

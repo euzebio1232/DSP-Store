@@ -12,9 +12,14 @@ module.exports = class ProdutosModel{
         return db.query("SELECT * FROM produto WHERE id_produto = ?", [id], callback)
     }
 
+    //Retorna produto por categoria
+    static getCategoria(categoria, callback){
+        return db.query("SELECT * FROM produto WHERE categoria = ?", [categoria], callback)
+    }
+
     //Adiciona produtos
     static adicionar(produto, callback){
-        return db.query("INSERT INTO produto (nome, descricao) VALUES(?, ?)", [produto.nome, produto.descricao], callback)};
+        return db.query("INSERT INTO produto (categoria, nome, descricao) VALUES(?, ?, ?)", [produto.categoria, produto.nome, produto.descricao], callback)};
 
     //Deletar um produto pelo ID
     static deletar(id, callback){
@@ -23,7 +28,7 @@ module.exports = class ProdutosModel{
 
     //Editar um produto pelo ID
     static editar(produto, callback){
-        return db.query("UPDATE produto SET nome = ?, descricao = ? WHERE id_produto = ?", [produto.nome, produto.descricao, produto.id_produto], callback)
+        return db.query("UPDATE produto SET categoria = ?, nome = ?, descricao = ? WHERE id_produto = ?", [produto.categoria, produto.nome, produto.descricao, produto.id_produto], callback)
     }
 
 }//Fim da class Model
