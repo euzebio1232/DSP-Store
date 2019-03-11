@@ -17,7 +17,7 @@ router.get("/", (req, res) => res.json({
 }));
 
 api.use('/', router);
-api.use('/dsp', portfolioRouter);
+api.use('/portfolio', portfolioRouter);
 
 api.listen(port);
-console.log('Run API...');
+console.log('API INICIALIZADA...');
