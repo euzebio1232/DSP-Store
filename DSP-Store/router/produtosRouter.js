@@ -1,135 +1,109 @@
 var express = require('express');
+
 var router = express.Router();
-var produtosModel = require('../model/produtos/produtosModel');
-var RespostaClass = require('../model/RespostaClass');
+//var produtosModel = require('../model/produtos/produtosModel');
+//var RespostaClass = require('../model/RespostaClass');
+var Produto = require('../model/models');
 
-//BUSCA/RETORNA TODOS OS PRODUTOS CADASTRADOS NO DB
-router.get("/", function(req, res, next){
+router.route("/produtos")
 
-    produtosModel.getTodos(function(erro, retorno){
-        let resposta = new RespostaClass();
-
-        if(erro){
-            resposta.erro = true;
-            resposta.msg = 'Ocorreu um erro!';
-            console.log('erro', erro);
-        }else{
-            resposta.dados = retorno;
-        }
-
-        res.json(resposta);
-
-    })
-});
-
-//BUSCA/RETORNA OS PRODUTOS POR ID
-router.get("/:id?", function(req, res, next){
-
-    produtosModel.getId(req.params.id, function(erro, retorno){
-        let resposta = new RespostaClass();
-
-        if(erro){
-            resposta.erro = true;
-            resposta.msg = 'Ocorreu um erro!';
-            console.log('erro', erro);
-        }else{
-            resposta.dados = retorno;
-        }
-
-        res.json(resposta);
-
-    })
-});
-
-//BUSCA/RETORNA OS PRODUTOS POR CATEGORIA
-router.get("/categoria?", function(req, res, next){
-
-    produtosModel.getCategoria(req.params.categoria, function(erro, retorno){
-        let resposta = new RespostaClass();
-
-        if(erro){
-            resposta.erro = true;
-            resposta.msg = 'Ocorreu um erro!';
-            console.log('erro', erro);
-        }else{
-            resposta.dados = retorno;
-        }
-
-        res.json(resposta);
-
-    })
-});
-
-//CADASTRA UM NOVO PRODUTO
-router.post("/?", function(req, res, next){
-
-    produtosModel.adicionar(req.body, function(erro, retorno){
-        let resposta = new RespostaClass();
-
-        if(erro){
-            resposta.erro = true;
-            resposta.msg = 'Ocorreu um erro!';
-            console.log('erro', erro);
-        }else{
-            if(retorno.affectedRows > 0){
-                resposta.msg = "CADASTRO DE PRODUTO REALIZADO COM SUCESSO!"
-            }else{
-                resposta.erro = true;
-                resposta.msg = "[ERRO] NÃO FOI POSSIVEL REALIZAR O CADASTRO DO PRODUTO!"
+    //  BUSCAR TODOS OS PRODUTOS
+    .get((req, res) => {
+        //SELECT * FROM produto;
+        Produto.findAll().then((produto) => {
+            if (produto.length > 0) {
+                res.json(produto)
+            } else {
+                res.json({mensagem: "NÃO HA PRODUTOS CADASTRADOS!"})
             }
-        }
-        console.log('resp', resposta)
-        res.json(resposta);
-
+        })
     })
-});
 
-//DELETA UM PRODUTO EXISTENTE PELO ID
-router.delete("/:id", function(req, res, next){
+    //  CRIAR UM NOVO PRODUTO
+    .post((req, res) => {
+        let categoriaEssa = req.body.categoria;
+        let nomeEsse = req.body.nome;
+        let descricaoEssa = req.body.descricao;
+        
+        //INSERT INTO produto(categoria, nome, descricao) VALUES (cate)
+        Produto.create({
+            categoria: categoriaEssa,
+            nome: nomeEsse,
+            descricao: descricaoEssa
+        }).then((produto) => {
+            res.json({mensagem: "PRODUTO ADICIONADO"})
+        })
+    })
 
-    produtosModel.deletar(req.params.id, function(erro, retorno){
-        let resposta = new RespostaClass();
 
-        if(erro){
-            resposta.erro = true;
-            resposta.msg = 'Ocorreu um erro!';
-            console.log('erro', erro);
-        }else{
-            if(retorno.affectedRows > 0){
-                resposta.msg = "PRODUTO EXCLUIDO COM SUCESSO!"
-            }else{
-                resposta.erro = true;
-                resposta.msg = "[ERRO] NÃO FOI POSSIVEL EXCLUIR O PRODUTO!"
+router.route("/produtos/:id")
+
+    //  BUSCAR PRODUTO POR ID
+    /*.get(function(req, res) {
+        let id = req.params.id;
+
+         //SELECT * FROM PRODUTO WHERE ID = REQ.PARAMS.ID LIMIT 1;
+        Produto.findOne(
+            {where: {id}}
+        ).then(function(produto) {
+            if (produto) {
+                res.json(produto);
+            } else {
+                res.json({mensagem: "Produto nao encontrado"})
             }
-        }
-        console.log('resp', resposta)
-        res.json(resposta);
+        })
+    })*/
 
-    })
-});
+    //  EDITAR UM PRODUTO PELO ID
+    .put(function(req, res) {
+        let id = req.params.id;
+        let nome = req.body.nome;
+        let descricao = req.body.descricao;
+        let novoProduto = { nome: nome, descricao: descricao };
 
-//EDITA UM PRODUTO EXISTENTE PELO ID
-router.put("/", function(req, res, next){
-
-    produtosModel.editar(req.body, function(erro, retorno){
-        let resposta = new RespostaClass();
-
-        if(erro){
-            resposta.erro = true;
-            resposta.msg = 'Ocorreu um erro!';
-            console.log('erro', erro);
-        }else{
-            if(retorno.affectedRows > 0){
-                resposta.msg = "PRODUTO EDITADO COM SUCESSO!"
-            }else{
-                resposta.erro = true;
-                resposta.msg = "[ERRO] NÃO FOI POSSIVEL EDITAR O PRODUTO!"
+         //SELECT * FROM PRODUTO WHERE ID = REQ.PARAMS.ID LIMIT 1;
+        Produto.findOne({
+            where: { id }
+        }).then((produto) => {
+            if (produto) {
+                //UPDATE PRODUTO SET NOME = ?, DESCRICAO = ? WHERE ID = ?;
+                Produto.update(novoProduto, {where: { id }}).then(() => {
+                    res.json({mensagem: "Produto " + id + " foi atualizado com sucesso"})
+                })
+            } else {
+                res.json({mensagem: "Produto nao encontrado"})
             }
-        }
-        console.log('resp', resposta)
-        res.json(resposta);
-
+        })
     })
-})
+
+    //  DELETAR UM PRODUTO PELO ID
+    .delete(function(req, res) {
+        let id = req.params.id;
+        
+        //SELECT * FROM PRODUTO WHERE ID = REQ.PARAMS.ID LIMIT 1;
+        Produto.findOne({
+            where: {id}
+        }).then((produto) => {
+            if (produto) {
+                //DELETE FROM PRODUTO WHERE ID = REQ.PARAMS.ID;
+                produto.destroy().then(() => {
+                    res.json({mensagem: "Produto deletado com sucesso"})
+                })
+            }
+        })
+    })
+
+//  BUSCAR PRODUTOS POR CATEGORIA
+router.route("/produtos/:categoria")
+    .get((req, res) => {
+        let categoria = req.params.categoria;
+       Produto.findAll({where: {categoria}}).then((produto) => {
+           if (produto) 
+               res.json(produto)
+           else
+                res.json({mensagem: 'Produto nao encontrado'})
+       }) 
+    })
+
 
 module.exports = router;

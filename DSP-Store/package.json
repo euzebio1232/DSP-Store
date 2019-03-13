@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "babel src -d dist --presets es2015",
+    "start": "nodemon ./api.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -16,6 +17,9 @@
     "express": "^4.16.4"
   },
   "dependencies": {
-    "mysql": "^2.16.0"
+    "bcrypt": "^3.0.4",
+    "mysql": "^2.16.0",
+    "mysql2": "^1.6.5",
+    "sequelize": "^4.43.0"
   }
 }

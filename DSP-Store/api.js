@@ -6,6 +6,7 @@ const port = 3000;
 const router = express.Router();
 
 const produtosRouter = require('./router/produtosRouter');
+const usuariosRouter = require('./router/usuariosRouter');
 
 api.use(cors());
 
@@ -16,8 +17,11 @@ router.get("/", (req, res) => res.json({
     mensagem: 'API ONLINE!'
 }));
 
-api.use('/', router);
-api.use('/produtos', produtosRouter);
+api.use('/', produtosRouter);
+api.use('/', usuariosRouter);
+
+//api.use('/', usuariosRouter);
+//api.use('/produtos', produtosRouter);
 
 api.listen(port);
 console.log('API INICIALIZADA COM SUCESSO...');

@@ -14,7 +14,7 @@ module.exports = class ProdutosModel{
 
     //Retorna produto por categoria
     static getCategoria(categoria, callback){
-        return db.query("SELECT * FROM produto WHERE categoria = ?", [categoria], callback)
+        return db.query("SELECT * FROM produto WHERE categoria = ?", ['categoria'], callback)
     }
 
     //Adiciona produtos
