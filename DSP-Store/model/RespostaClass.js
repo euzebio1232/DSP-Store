@@ -5,3 +5,5 @@ module.exports = class RespostaClass{
         this.dados = null;
     }
 }
+
+//fadasdas
