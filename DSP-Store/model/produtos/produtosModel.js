@@ -1,4 +1,4 @@
-const db = require('../../database/db_connect');
+/*const db = require('../../database/db_connect');
 
 module.exports = class ProdutosModel{
 
@@ -31,4 +31,21 @@ module.exports = class ProdutosModel{
         return db.query("UPDATE produto SET categoria = ?, nome = ?, descricao = ? WHERE id_produto = ?", [produto.categoria, produto.nome, produto.descricao, produto.id_produto], callback)
     }
 
-}//Fim da class Model
+}//Fim da class Model*/
+var Sequelize = require('sequelize');
+
+var sequelize = require("../../database/db_connect");
+
+// CREATE TABLE PRODUTOS
+const Produto = sequelize.define('produto', {
+    categoria: Sequelize.STRING,
+    marca: Sequelize.STRING,
+    nome: Sequelize.STRING,
+    tamanho: Sequelize.STRING,
+    valor: Sequelize.STRING,
+    descricao: Sequelize.STRING,
+})
+
+Produto.sync();
+
+module.exports = Produto;

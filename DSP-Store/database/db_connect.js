@@ -1,4 +1,4 @@
-const mysql = require('mysql');
+/*const mysql = require('mysql');
 
 const conexao = mysql.createPool({
     host: 'localhost',
@@ -7,4 +7,13 @@ const conexao = mysql.createPool({
     database:'db_dsp'
 });
 
-module.exports = conexao;
+module.exports = conexao;*/
+
+var Sequelize = require('sequelize');
+
+let sequelize = new Sequelize('db_dsp', 'root', '', {
+    host: 'localhost',
+    dialect: 'mysql'
+})
+
+module.exports = sequelize;
