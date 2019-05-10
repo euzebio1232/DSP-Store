@@ -7,6 +7,7 @@ const router = express.Router();
 
 const usuariosRouter = require('./router/usuario/usuariosRouter');
 const produtosRouter = require('./router/produto/produtosRouter');
+const pedidosRouter = require('./router/pedido/pedidoRouter');
 
 api.use(cors());
 
@@ -19,6 +20,7 @@ router.get("/", (req, res) => res.json({
 
 api.use('/', usuariosRouter);
 api.use('/', produtosRouter);
+api.use('/', pedidosRouter);
 
 //api.use('/', usuariosRouter);
 //api.use('/',produtos', produtosRouter);

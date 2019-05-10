@@ -19,7 +19,10 @@ const auth = (req, res, next) => {
                 }
                 else{
                     req.user = decoded
+                    console.log(decoded);
+                    res.json(decoded);
                     next()
+                    
                 }
             })
         }else{

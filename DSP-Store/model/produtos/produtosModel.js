@@ -44,6 +44,9 @@ const Produto = sequelize.define('produto', {
     tamanho: Sequelize.STRING,
     valor: Sequelize.STRING,
     descricao: Sequelize.STRING,
+    imagem: Sequelize.STRING,
+    estoque: Sequelize.STRING,
+    referencia: Sequelize.STRING
 })
 
 Produto.sync();
